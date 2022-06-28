@@ -12,12 +12,12 @@ const MainSection : FC<GridAreaProps> =  ({gridArea}) => {
     return board;
   })
 
-  const BoardDraw = useMemo(() => board.drawFC(),[board.board?.id])
-
   return (
     <div>
-      MainSection
-      <BoardDraw/>
+      <p>MainSection</p>
+      <p>Top board</p>
+      {board.createElement()}
+      <p>Bottom board</p>
     </div>
   )
 }

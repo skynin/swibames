@@ -9,7 +9,7 @@ import LeftSide from './components/LeftSide';
 import RightSide from './components/RightSide';
 import MainSection from './components/MainSection';
 import GridResponsive from './components/GridResponsive';
-import { ABOUT_ROUTE } from './utils/consts';
+// import { ABOUT_ROUTE } from './utils/consts';
 import HeaderMenu from './components/HeaderMenu';
 
 const THEMES : { [key: string]: ThemeType }= {
@@ -42,7 +42,7 @@ function App() {
           <Box height="32px" width="32px" border="all">
             <Image fit="cover" src="/logo192.png"/>
           </Box>
-          <Text>Skynin Wit Games <b>v0.1.0</b></Text>
+          <Text>Skynin's Witty Games <b>v0.1.0</b></Text>
         </Box>
         <Button label="О сайте"/>
       </Footer>

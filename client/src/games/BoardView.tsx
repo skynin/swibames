@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { Grid, AreasType } from "grommet"
 import Board from '../../../core/src/models/Board'
 import CellView from './CellView'
@@ -13,20 +13,30 @@ export default class BoardView {
     this.board = board
 
     this.cells = []
-    let idView = 100
     for(let cell of board.cells) {
-      this.cells.push(new CellView(idView, cell))
-      ++idView
+      this.cells.push(new CellView(cell))
     }
+  }
+
+  get gridRows(): string[] {
+    return ['auto', 'auto', 'auto']
+  }
+
+  get gridColumns(): string[] {
+    return ['auto', 'auto', 'auto']
+  }
+
+  get gridAreas() {
+    return squareArea(this.sizeBoard)
   }
 
   drawFC() : React.FC {
 
-    if (this.board === null) return () => (<div></div>)
+    if (this.board === null) return () => (<div>Empty board</div>)
 
-    const rows=['auto', 'auto', 'auto']
-    const columns=['auto', 'auto', 'auto']
-    const areas = squareArea(this.sizeBoard)
+    const rows = this.gridRows
+    const columns = this.gridColumns
+    const areas = this.gridAreas
   
     return () => {
 
@@ -34,13 +44,18 @@ export default class BoardView {
 
       return (
         <Grid rows={rows} columns={columns} gap="xxsmall" areas={areas}>          
-          {cellViews.map((c: CellView) =>
-            React.createElement(c.drawFC(), {key: c.reactKey})            
-          )}          
+          {cellViews.map((c: CellView) => c.createElement())}
         </Grid>
       )
     }
   }
+
+  private cacheElement: React.FC | null = null
+
+  createElement() : ReactElement {
+    if (!this.cacheElement) this.cacheElement = this.drawFC()
+    return React.createElement(this.board !== null ? this.cacheElement! : this.drawFC(), {})
+  }  
 }
 
 // * * * utils function
